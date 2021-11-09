@@ -6,6 +6,18 @@ import Modele.Sujet;
 import javax.swing.*;
 
 public class VueNbPaires extends JLabel implements Observateur {
+
+    /**
+     * Creates a <code>JLabel</code> instance with the specified text.
+     * The label is aligned against the leading edge of its display area,
+     * and centered vertically.
+     *
+     * @param text The text to be displayed by the label.
+     */
+    public VueNbPaires(String text) {
+        super(text);
+    }
+
     /**
      * Permet d'actualiser les vues
      *

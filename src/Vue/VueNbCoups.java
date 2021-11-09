@@ -9,6 +9,18 @@ import javax.swing.*;
  * @author steiner58u
  */
 public class VueNbCoups extends JLabel implements Observateur {
+
+    /**
+     * Creates a <code>JLabel</code> instance with the specified text.
+     * The label is aligned against the leading edge of its display area,
+     * and centered vertically.
+     *
+     * @param text The text to be displayed by the label.
+     */
+    public VueNbCoups(String text) {
+        super(text);
+    }
+
     /**
      * Permet d'actualiser les vues
      *

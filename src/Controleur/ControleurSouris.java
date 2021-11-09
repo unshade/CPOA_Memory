@@ -1,6 +1,7 @@
 package Controleur;
 
 import Modele.Modele;
+import Vue.VueCarte;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -41,7 +42,10 @@ public class ControleurSouris implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-
+        Object o = e.getSource();
+        VueCarte vc = (VueCarte) o;
+        int index = vc.getIndexCarte();
+        this.modele.retournerCarte(index);
     }
 
     /**

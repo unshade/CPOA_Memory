@@ -30,6 +30,11 @@ public class ControleurBoutons implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getActionCommand().equals("cacher")) {
+            this.modele.cacher();
+        }
+        if (e.getActionCommand().equals("melanger")) {
+            this.modele.melanger();
+        }
     }
 }
