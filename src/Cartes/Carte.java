@@ -1,3 +1,5 @@
+package Cartes;
+
 public class Carte {
 	private boolean visible; // false=cachee true=visible
 	private int num; 		 // numero du fichier image
