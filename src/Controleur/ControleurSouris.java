@@ -45,7 +45,9 @@ public class ControleurSouris implements MouseListener {
         Object o = e.getSource();
         VueCarte vc = (VueCarte) o;
         int index = vc.getIndexCarte();
-        this.modele.retournerCarte(index);
+        if (!vc.getCarte().isVisible()) {
+            this.modele.retournerCarte(index);
+        }
     }
 
     /**

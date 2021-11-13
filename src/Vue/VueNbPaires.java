@@ -5,6 +5,9 @@ import Modele.Sujet;
 
 import javax.swing.*;
 
+/**
+ * @author steiner58u
+ */
 public class VueNbPaires extends JLabel implements Observateur {
 
     /**
@@ -13,9 +16,10 @@ public class VueNbPaires extends JLabel implements Observateur {
      * and centered vertically.
      *
      * @param text The text to be displayed by the label.
+     * @param center
      */
-    public VueNbPaires(String text) {
-        super(text);
+    public VueNbPaires(String text, int center) {
+        super(text, center);
     }
 
     /**

@@ -16,9 +16,10 @@ public class VueNbCoups extends JLabel implements Observateur {
      * and centered vertically.
      *
      * @param text The text to be displayed by the label.
+     * @param center
      */
-    public VueNbCoups(String text) {
-        super(text);
+    public VueNbCoups(String text, int center) {
+        super(text, center);
     }
 
     /**

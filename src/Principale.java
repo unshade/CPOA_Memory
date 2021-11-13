@@ -1,10 +1,18 @@
 import Cartes.Carte;
+import Controleur.ControleurBoutons;
+import Controleur.ControleurSouris;
+import Modele.Modele;
+import Vue.VueCarte;
+import Vue.VueNbCoups;
+import Vue.VueNbPaires;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -20,6 +28,7 @@ import javax.swing.border.Border;
 public class Principale {
 
 	public static void main(String[] args) {
+
 
 		/**********************************
 		* Création des bords des composants
@@ -39,9 +48,11 @@ public class Principale {
 			cartes.add(carte);
 		}
 		// Mélange des cartes
-		Collections.shuffle(cartes);  
+		Collections.shuffle(cartes);
 		
-		
+		Modele modele = new Modele(cartes);
+
+
 		/*******************************************************************
 		* Le JPanel plateau au nord dans lequel les cartes sont affichees
 		* les JLabel avec une ImageIcon associee a chaque carte
@@ -53,14 +64,12 @@ public class Principale {
 		plateau.setSize(120 * 5, 120 * 4);
 		
 		//Création des JLabel associés aux cartes - affichage dans le JPanel Plateau
-		String chemin ;
 		String repertoire="smiley"; //ou "fruits" selon la série choisie
 		for (int i = 0; i < 20; i++) {
-			if(cartes.get(i).isVisible())  //si l'attribut visible de la carte est a true alors l'image de la carte apparaitra 
-				chemin = "img/" + repertoire + "/im" + cartes.get(i).getNum()+".png";
-			else
-				chemin="img/" + repertoire + "/fond.png";//sinon l'image de la carte retournée apparaitra
-			plateau.add(new JLabel(new ImageIcon(chemin))); //association du fichier image avec le JLabel avec la classe ImageIcon
+			VueCarte newCarte = new VueCarte(cartes.get(i), repertoire, i);
+			plateau.add(newCarte); //association du fichier image avec le JLabel avec la classe ImageIcon
+			newCarte.addMouseListener(new ControleurSouris(modele));
+			modele.enregistrerObservateur(newCarte);
 		}		
 
 		
@@ -71,40 +80,47 @@ public class Principale {
 		JPanel 			panneauScore;
 		panneauScore= new JPanel(new GridLayout(2,1));
 		
-		JLabel 			nbCoups;
-		nbCoups=new JLabel(" Nombre de coups joués : 0 ",JLabel.CENTER);
+		VueNbCoups nbCoups;
+		nbCoups=new VueNbCoups(" Nombre de coups joués : 0 ",JLabel.CENTER);
 		nbCoups.setPreferredSize(new Dimension(605,55));
 		nbCoups.setOpaque(true);
 		nbCoups.setForeground(Color.blue);
 		nbCoups.setBorder(compound);
 		panneauScore.add(nbCoups);
+		modele.enregistrerObservateur(nbCoups);
 	
-		JLabel		 	nbPaires;
-		nbPaires=new JLabel("Nombre de paires découvertes :  0 ",JLabel.CENTER);
+		VueNbPaires nbPaires;
+		nbPaires=new VueNbPaires("Nombre de paires découvertes :  0 ",JLabel.CENTER);
 		nbPaires.setPreferredSize(new Dimension(605,55));
 		nbPaires.setOpaque(true);
 		nbPaires.setForeground(Color.blue);
 		nbPaires.setBorder(compound);
 		panneauScore.add(nbPaires);
+		modele.enregistrerObservateur(nbPaires);
 				
 		
 		/********************************************************************
 		* Le JPanel panneauChoix au sud de l'IG contenant les 4 boutons
 		********************************************************************/
 		JPanel panneauChoix=new JPanel();
-		
+
+		ControleurBoutons controleurBoutons = new ControleurBoutons(modele);
 
 		JButton boutonSmiley = new JButton("Smiley");
 		panneauChoix.add(boutonSmiley);
+		boutonSmiley.addActionListener(controleurBoutons);
 		
 		JButton boutonFruits = new JButton("Fruits");
 		panneauChoix.add(boutonFruits);
+		boutonFruits.addActionListener(controleurBoutons);
 		
 		JButton boutonCacher = new JButton("Cacher");
 		panneauChoix.add(boutonCacher);
+		boutonCacher.addActionListener(controleurBoutons);
 
 		JButton boutonMelanger = new JButton("Melanger");		
 		panneauChoix.add(boutonMelanger);
+		boutonMelanger.addActionListener(controleurBoutons);
 		
 	 
 		/**************************************

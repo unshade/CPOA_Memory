@@ -2,6 +2,10 @@ package Modele;
 
 import Cartes.Carte;
 import Vue.Observateur;
+import Vue.VueCarte;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,10 +13,34 @@ import java.util.List;
  */
 public class Modele implements Sujet {
 
+    /**
+     * Carte precedement jouee
+     */
     private Carte cartePrecedente;
+    /**
+     * Liste des cartes du jeu
+     */
     private List<Carte> cartes;
+    /**
+     * Liste des observateurs du modele
+     */
     private List<Observateur> observateurs;
+    /**
+     * Informations sur la partie
+     */
     private int nbCoupJoues, nbPairesTrouvees;
+
+    /**
+     * Constructeur du modele
+     * @param cartes Liste des cartes
+     */
+    public Modele(List<Carte> cartes) {
+        this.cartePrecedente = null;
+        this.cartes = cartes;
+        this.observateurs = new ArrayList<>();
+        this.nbCoupJoues = 0;
+        this.nbPairesTrouvees = 0;
+    }
 
     /**
      * Permet de retourner toutes les cartes
@@ -21,18 +49,15 @@ public class Modele implements Sujet {
         for (Carte c : cartes) {
             c.setVisible(false);
         }
+        this.notifierObservateurs();
     }
 
     /**
      * Permet de melanger les cartes
      */
     public void melanger(){
-        for (int i = 0; i < cartes.size(); i++) {
-            int j = (int) (Math.random() * cartes.size());
-            Carte temp = cartes.get(i);
-            cartes.set(i, cartes.get(j));
-            cartes.set(j, temp);
-        }
+        Collections.shuffle(this.cartes);
+        this.notifierObservateurs();
     }
 
     /**
@@ -49,6 +74,23 @@ public class Modele implements Sujet {
      */
     public void retournerCarte(int i){
         this.cartes.get(i).setVisible(true);
+        notifierObservateurs();
+        if (this.cartePrecedente == null) {
+            this.cartePrecedente = this.cartes.get(i);
+        }
+        else {
+            this.nbCoupJoues++;
+            if (this.cartes.get(i).getNum() == this.cartePrecedente.getNum()) {
+                this.cartePrecedente = null;
+                this.nbPairesTrouvees++;
+                this.notifierObservateurs();
+            }
+            else {
+                this.cartes.get(i).setVisible(false);
+                this.cartePrecedente.setVisible(false);
+                this.cartePrecedente = null;
+            }
+        }
     }
 
     /**
@@ -95,6 +137,15 @@ public class Modele implements Sujet {
         for (Observateur observateur : this.observateurs) {
             observateur.actualiser(this);
         }
+    }
+
+    /**
+     * Permet de changer les images
+     * @param s nom de la collection d'images
+     */
+    public void changeImg(String s) {
+        VueCarte.setRepertoire(s);
+        this.notifierObservateurs();
     }
 
 }

@@ -6,18 +6,24 @@ import Modele.Sujet;
 
 import javax.swing.*;
 
+/**
+ * @author steiner58u
+ */
 public class VueCarte extends JLabel implements Observateur {
     private int indexCarte;
-    private String repertoire;
+    private static String repertoire;
+    private Carte carte;
 
     /**
      * Constructeur de la classe
      * @param repertoire repertoire de la carte
      * @param indexCarte s index de la carte
      */
-    public VueCarte(String repertoire, int indexCarte) {
-        this.repertoire = repertoire;
+    public VueCarte(Carte carte, String repertoire, int indexCarte) {
+        this.carte = carte;
+        repertoire = repertoire;
         this.indexCarte = indexCarte;
+        this.setIcon(new ImageIcon("img/" + repertoire + "/" + "fond.png"));
     }
 
     /**
@@ -28,12 +34,15 @@ public class VueCarte extends JLabel implements Observateur {
     @Override
     public void actualiser(Sujet s) {
         Modele m = (Modele) s;
-        if (m.getCartes().get(this.indexCarte).isVisible()) {
-            this.setIcon(new ImageIcon(this.repertoire + "/" + "im" + this.indexCarte + ".png"));
+        this.carte = m.getCartes().get(this.indexCarte);
+        String path;
+        if (this.carte.isVisible()) {
+            path = "img/" + repertoire + "/" + "im" + this.carte.getNum() + ".png";
         }
         else {
-            this.setIcon(new ImageIcon(this.repertoire + "/" + "fond.png"));
+            path = "img/" + repertoire + "/" + "fond.png";
         }
+        this.setIcon(new ImageIcon(path));
     }
 
     /**
@@ -42,5 +51,22 @@ public class VueCarte extends JLabel implements Observateur {
      */
     public int getIndexCarte() {
         return this.indexCarte;
+    }
+
+    /**
+     * Obtenir la carte
+     * @return la carte
+     */
+    public Carte getCarte() {
+        return this.carte;
+    }
+
+
+    /**
+     * Obtenir le repertoire
+     * @param repertoire repertoire
+     */
+    public static void setRepertoire(String repertoire) {
+        VueCarte.repertoire = repertoire;
     }
 }
