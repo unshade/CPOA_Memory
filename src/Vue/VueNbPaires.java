@@ -30,6 +30,11 @@ public class VueNbPaires extends JLabel implements Observateur {
     @Override
     public void actualiser(Sujet s) {
         Modele m = (Modele) s;
-        this.setText("Nombre de paires découvertes : " + m.getNbPairesTrouvees());
+
+        if (m.getNbPairesTrouvees() == 10) {
+            this.setText("Bravo, vous avez gagné !");
+        } else {
+            this.setText("Nombre de paires découvertes : " + m.getNbPairesTrouvees());
+        }
     }
 }

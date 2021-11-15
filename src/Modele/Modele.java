@@ -49,6 +49,7 @@ public class Modele implements Sujet {
         for (Carte c : cartes) {
             c.setVisible(false);
         }
+        this.nbPairesTrouvees = 0;
         this.notifierObservateurs();
     }
 

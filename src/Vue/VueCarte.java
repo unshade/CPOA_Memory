@@ -16,12 +16,10 @@ public class VueCarte extends JLabel implements Observateur {
 
     /**
      * Constructeur de la classe
-     * @param repertoire repertoire de la carte
      * @param indexCarte s index de la carte
      */
     public VueCarte(Carte carte, int indexCarte) {
         this.carte = carte;
-        repertoire = repertoire;
         this.indexCarte = indexCarte;
         this.setIcon(new ImageIcon("img/" + repertoire + "/" + "fond.png"));
     }
