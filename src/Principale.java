@@ -65,12 +65,13 @@ public class Principale {
 		
 		//Création des JLabel associés aux cartes - affichage dans le JPanel Plateau
 		String repertoire="smiley"; //ou "fruits" selon la série choisie
+		VueCarte.setRepertoire(repertoire);
 		for (int i = 0; i < 20; i++) {
-			VueCarte newCarte = new VueCarte(cartes.get(i), repertoire, i);
+			VueCarte newCarte = new VueCarte(cartes.get(i), i);
 			plateau.add(newCarte); //association du fichier image avec le JLabel avec la classe ImageIcon
 			newCarte.addMouseListener(new ControleurSouris(modele));
 			modele.enregistrerObservateur(newCarte);
-		}		
+		}
 
 		
 		/********************************************************************

@@ -19,7 +19,7 @@ public class VueCarte extends JLabel implements Observateur {
      * @param repertoire repertoire de la carte
      * @param indexCarte s index de la carte
      */
-    public VueCarte(Carte carte, String repertoire, int indexCarte) {
+    public VueCarte(Carte carte, int indexCarte) {
         this.carte = carte;
         repertoire = repertoire;
         this.indexCarte = indexCarte;
